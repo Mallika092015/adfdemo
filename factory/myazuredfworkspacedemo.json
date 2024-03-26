@@ -1,0 +1,9 @@
+{
+	"name": "myazuredfworkspacedemo",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "471e9277-e5bd-47fc-b0e6-ad9830a008ac",
+		"tenantId": "6cd92d9f-ac71-468c-b5ce-28cb2b94051b"
+	}
+}

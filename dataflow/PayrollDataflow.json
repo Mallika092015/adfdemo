@@ -1,0 +1,51 @@
+{
+	"name": "PayrollDataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "empDataset",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeeDataset"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "PayrollOutputDataset",
+						"type": "DatasetReference"
+					},
+					"name": "PayrollOutput"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FilterPayrollDept"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Emptid as string,",
+				"          { name} as string,",
+				"          { country} as string,",
+				"          { department} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmployeeDataset",
+				"EmployeeDataset filter(equals({ department},'3')) ~> FilterPayrollDept",
+				"FilterPayrollDept sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          deptid as string,",
+				"          { deptname} as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> PayrollOutput"
+			]
+		}
+	}
+}
